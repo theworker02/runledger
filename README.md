@@ -9,10 +9,11 @@
 ![license MIT](https://img.shields.io/badge/license-MIT-0B1F33)
 ![node >=18](https://img.shields.io/badge/node-%3E%3D18-C9A227?labelColor=0B1F33)
 ![release 1.00](https://img.shields.io/github/v/release/theworker02/runledger?display_name=release)
+[![npm](https://img.shields.io/npm/v/@magnexis/runledger.svg)](https://www.npmjs.com/package/@magnexis/runledger)
 
 Package version **1.00** (`1.0.0`). Default branch is **`main`** — never `master`.
 
-**Docs:** [GitHub Pages](https://theworker02.github.io/runledger/) · **Source:** [`theworker02/runledger`](https://github.com/theworker02/runledger) · **Release 1.00:** [`v1.0.0`](https://github.com/theworker02/runledger/releases/tag/v1.0.0)
+**Docs:** [GitHub Pages](https://theworker02.github.io/runledger/) · **Source:** [`theworker02/runledger`](https://github.com/theworker02/runledger) · **Release 1.00:** [`v1.0.0`](https://github.com/theworker02/runledger/releases/tag/v1.0.0) · **npm:** [`@magnexis/runledger`](https://www.npmjs.com/package/@magnexis/runledger)
 
 ## Why it exists
 
@@ -25,6 +26,15 @@ Anyone wrapping scripts, workshop graders, or local CI helpers who need a durabl
 ## Install
 
 Requires Node.js 18 or newer. No extra npm dependencies.
+
+### Global install from npm
+
+```bash
+npm install -g @magnexis/runledger
+runledger --help
+```
+
+Package page: https://www.npmjs.com/package/@magnexis/runledger
 
 ### Global install from GitHub
 
@@ -44,7 +54,7 @@ npm install -g .
 ### Run without installing (npx / node)
 
 ```bash
-npx --yes git+https://github.com/theworker02/runledger.git --help
+npx --yes @magnexis/runledger --help
 node src/cli.js --help
 ```
 
