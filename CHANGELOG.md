@@ -1,5 +1,5 @@
 # Changelog
 
-## 0.1.0 — 2026-08-23
+## 1.00 — 2026-08-23
 
-- Initial release: record and list JSONL command receipts.
+- Initial public release (1.00 / 1.0.0).
