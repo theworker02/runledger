@@ -1,7 +1,7 @@
 {
   "name": "runledger",
   "version": "1.0.0",
-  "description": "Append and list JSONL command receipts.",
+  "description": "Append {ts,cmd,code} receipts to .runledger.jsonl and list them later.",
   "bin": {
     "runledger": "./src/cli.js"
   },
@@ -12,5 +12,26 @@
   "license": "MIT",
   "engines": {
     "node": ">=18"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/theworker02/runledger.git"
+  },
+  "homepage": "https://theworker02.github.io/runledger/",
+  "bugs": {
+    "url": "https://github.com/theworker02/runledger/issues"
+  },
+  "files": [
+    "src",
+    "docs",
+    "LICENSE",
+    "README.md"
+  ],
+  "keywords": [
+    "jsonl",
+    "ledger",
+    "receipt",
+    "cli",
+    "audit"
+  ]
 }

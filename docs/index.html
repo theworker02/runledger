@@ -3,30 +3,94 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>runledger 1.00</title>
+  <title>runledger  · 1.00</title>
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <header>
-    <div class="wrap brand">
-      <img src="logo.svg" alt="runledger mark">
-      <div>
-        <h1>runledger</h1>
-        <p class="tag">JSONL command receipts · version 1.00</p>
+  <nav class="nav sans">
+    <a class="brand-lockup" href="index.html"><img src="logo.svg" alt=""> runledger</a>
+    <div class="links">
+      <a href="index.html#overview">Overview</a>
+      <a href="index.html#install">Install</a>
+      <a href="usage.html">Usage</a>
+      <a href="index.html#examples">Examples</a>
+    </div>
+  </nav>
+  
+  <header class="hero">
+    <img src="logo.svg" alt="runledger mark">
+    <div>
+      <p class="kicker sans">theworker02 · version 1.00</p>
+      <h1>runledger</h1>
+      <p class="lede">Append {ts,cmd,code} receipts to .runledger.jsonl and list them later.</p>
+      <div class="badges sans">
+        <span class="badge">1.00 / 1.0.0</span>
+        <span class="badge">branch main</span>
+        <span class="badge">MIT</span>
+        <span class="badge">Node.js >= 18</span>
       </div>
     </div>
   </header>
-  <main class="wrap">
-    <section class="card">
-      <h2>Purpose</h2>
-      <p>Keep a local ledger of commands and exit codes as JSONL.</p>
-      <h2>Install</h2>
-      <pre><code>npm install -g runledger</code></pre>
-      <h2>Usage</h2>
-      <pre><code>runledger record "npm test" 0
-runledger list</code></pre>
+  <div class="wrap">
+    <section id="overview">
+      <h2>Overview</h2>
+      <p>Shell history is noisy and easy to lose. runledger writes an append-only JSONL log next to the project so you can prove what ran and whether it succeeded.</p>
+      <p>Anyone wrapping scripts, workshop graders, or local CI helpers who need a durable, grep-friendly command log.</p>
     </section>
-    <footer>MIT © 2026 theworker02 · version 1.00 (1.0.0) · navy #0B1F33 · gold #C9A227</footer>
-  </main>
+    <section id="install">
+      <h2>Install</h2>
+      <p>Install globally from Git, or run with Node from a clone. There are no extra dependencies.</p>
+      <pre><code>npm install -g git+https://github.com/theworker02/runledger.git
+runledger --help
+node src/cli.js --help</code></pre>
+    </section>
+    <section id="usage">
+      <h2>Usage</h2>
+      <p>Synopsis: <code>runledger &lt;command&gt; [args]</code></p>
+      <p>See the <a href="usage.html">full CLI reference</a> for every flag, exit code, and example.</p>
+      <pre><code>runledger 1.00 (1.0.0)
+
+Usage:
+  runledger record &lt;cmd&gt; &lt;code&gt;
+  runledger list
+  runledger --help
+  runledger --version
+
+Append JSONL receipts {ts,cmd,code} to ./.runledger.jsonl.
+
+Subcommands:
+  record   Append one receipt. &lt;cmd&gt; is a string; &lt;code&gt; is an integer exit code.
+  list     Print every receipt as pretty JSON.
+
+Options:
+  -h, --help       Show this help
+  -v, --version    Print 1.0.0
+
+Examples:
+  runledger record "npm test" 0
+  runledger record "npm lint" 1
+  runledger list</code></pre>
+    </section>
+    <section id="examples">
+      <h2>Examples</h2>
+      <div class="grid-2">
+        <div>
+          <h3 class="ok">Success</h3>
+          <p>Record a passing command, then list.</p><pre><code>runledger record "npm test" 0
+runledger list</code></pre><pre><code>[{"ts":"2026-08-23T16:00:00.000Z","cmd":"npm test","code":0}]</code></pre>
+        </div>
+        <div>
+          <h3 class="fail">Failure</h3>
+          <p>Missing arguments fail fast.</p><pre><code>runledger record</code></pre><pre><code>usage: runledger record &lt;cmd&gt; &lt;code&gt;</code></pre><p>Exit code is 1.</p>
+        </div>
+      </div>
+    </section>
+  </div>
+  <footer class="sans">
+    MIT © 2026 theworker02 · version <strong>1.00</strong> (<code>1.0.0</code>) ·
+    navy <code>#0B1F33</code> · gold <code>#C9A227</code> ·
+    <a href="https://github.com/theworker02/runledger">GitHub</a> ·
+    <a href="https://thanks.dev/u/gh/theworker02">thanks.dev</a>
+  </footer>
 </body>
 </html>

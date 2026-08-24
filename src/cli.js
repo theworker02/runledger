@@ -1,7 +1,18 @@
 #!/usr/bin/env node
 const { record, list } = require("./index.js");
+const { HELP, VERSION } = require("./help.js");
 
-const [subcommand, ...rest] = process.argv.slice(2);
+const args = process.argv.slice(2);
+if (args.includes("-h") || args.includes("--help")) {
+  process.stdout.write(HELP);
+  process.exit(0);
+}
+if (args.includes("-v") || args.includes("--version")) {
+  process.stdout.write(`${VERSION}\n`);
+  process.exit(0);
+}
+
+const [subcommand, ...rest] = args;
 
 if (subcommand === "record") {
   const cmd = rest[0];
