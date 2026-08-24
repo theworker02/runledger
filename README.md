@@ -1,6 +1,6 @@
 # runledger
 
-<img src="docs/logo.svg" alt="runledger mark" width="88" height="88">
+<img src="docs/logo.svg" alt="runledger mark" width="96" height="96">
 
 **Append {ts,cmd,code} receipts to .runledger.jsonl and list them later.**
 
@@ -11,6 +11,8 @@
 ![release 1.00](https://img.shields.io/github/v/release/theworker02/runledger?display_name=release)
 
 Package version **1.00** (`1.0.0`). Default branch is **`main`** — never `master`.
+
+**Docs:** [GitHub Pages](https://theworker02.github.io/runledger/) · **Source:** [`theworker02/runledger`](https://github.com/theworker02/runledger) · **Release 1.00:** [`v1.0.0`](https://github.com/theworker02/runledger/releases/tag/v1.0.0)
 
 ## Why it exists
 
