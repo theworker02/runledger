@@ -30,28 +30,63 @@
   <div class="wrap">
     <section>
       <h2>Synopsis</h2>
-      <pre><code>runledger &lt;command&gt; [args]</code></pre>
-      <div class="callout sans"><strong>Tip:</strong> <code>runledger --help</code> prints this text in the terminal. <code>runledger --version</code> prints <code>1.0.0</code>.</div>
+      <pre><code>runledger 1.00 (1.0.0)
+
+Usage:
+  runledger record &lt;cmd&gt; &lt;code&gt; [options]
+  runledger list [options]
+  runledger summary [options]
+
+Append-only JSONL command ledger. Each receipt is {ts, cmd, code}.
+Default store: ./.runledger.jsonl
+
+Subcommands:
+  record             Append one receipt. &lt;cmd&gt; is a string; &lt;code&gt; is an integer
+  list               Print receipts, optionally filtered
+  summary            Counts, first/last timestamps, and per-command totals
+
+Options:
+  -h, --help         Show this help and exit 0
+  -V, -v, --version  Print 1.0.0 and exit 0
+  --json             JSON output (pretty for list/summary)
+  --file &lt;path&gt;      Ledger file (relative to cwd unless absolute)
+  --since &lt;date&gt;     Keep receipts at or after this ISO/date string
+  --until &lt;date&gt;     Keep receipts at or before this ISO/date string
+  --cmd &lt;substr&gt;     Keep receipts whose cmd contains this substring
+
+Exit codes:
+  0  success
+  1  usage error, invalid JSONL, or invalid date/code
+
+Examples:
+  runledger record "npm test" 0
+  runledger record "npm lint" 1 --file ./tmp/runs.jsonl
+  runledger list --since 2026-08-01 --cmd test
+  runledger summary --json</code></pre>
+      <div class="callout sans"><strong>Tip:</strong> <code>runledger --help</code> and <code>-h</code> print this text. <code>runledger --version</code> and <code>-V</code> print <code>1.0.0</code>.</div>
     </section>
     <section>
       <h2>Flags and arguments</h2>
-      <table class="sans"><thead><tr><th>Flag / argument</th><th>Meaning</th></tr></thead><tbody><tr><td><code>-h, --help</code></td><td>Print detailed usage and exit 0.</td></tr><tr><td><code>-v, --version</code></td><td>Print 1.0.0 and exit 0.</td></tr><tr><td><code>record &lt;cmd&gt; &lt;code&gt;</code></td><td>Append one receipt. &lt;cmd&gt; is a string; &lt;code&gt; is the numeric exit code.</td></tr><tr><td><code>list</code></td><td>Print all receipts as a JSON array.</td></tr></tbody></table>
+      <p>The complete flag list is in <code>runledger --help</code> (shown above). Human output is the default; pass <code>--json</code> where supported.</p>
     </section>
     <section>
       <h2>Exit codes</h2>
-      <table class="sans"><thead><tr><th>Code</th><th>Meaning</th></tr></thead><tbody><tr><td><code>0</code></td><td>record or list succeeded.</td></tr><tr><td><code>1</code></td><td>Unknown subcommand or missing record arguments.</td></tr></tbody></table>
+      <table class="sans"><thead><tr><th>Code</th><th>Meaning</th></tr></thead><tbody><tr><td><code>0</code></td><td>record, list, or summary succeeded.</td></tr><tr><td><code>1</code></td><td>Unknown subcommand, invalid JSONL, or bad date/code.</td></tr></tbody></table>
     </section>
     <section>
       <h2>Configuration</h2>
-      <p>Store file is always <code>.runledger.jsonl</code> in the current working directory. There is no global config. Create the file by recording; missing file means list returns [].</p>
+      <p>Default store is `.runledger.jsonl` in the current working directory. Override with `--file`.</p>
     </section>
     <section id="examples">
       <h2>Worked examples</h2>
       <h3 class="ok">Success path</h3>
-      <p>Record a passing command, then list.</p><pre><code>runledger record "npm test" 0
-runledger list</code></pre><pre><code>[{"ts":"2026-08-23T16:00:00.000Z","cmd":"npm test","code":0}]</code></pre>
+      <p>Record a passing command, then list and summarize.</p><pre><code>runledger record "npm test" 0
+runledger list
+runledger summary</code></pre><pre><code>2026-08-23T16:00:00.000Z  exit 0  npm test
+receipts: 1
+ok:       1</code></pre>
       <h3 class="fail">Failure path</h3>
-      <p>Missing arguments fail fast.</p><pre><code>runledger record</code></pre><pre><code>usage: runledger record &lt;cmd&gt; &lt;code&gt;</code></pre><p>Exit code is 1.</p>
+      <p>Missing record arguments fail fast.</p><pre><code>runledger record</code></pre><pre><code>usage: runledger record &lt;cmd&gt; &lt;code&gt;</code></pre><p>Exit code is 1.</p>
     </section>
   </div>
   <footer class="sans">

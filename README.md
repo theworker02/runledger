@@ -59,24 +59,49 @@ The list command prints a JSON array of receipts with ISO timestamps.
 
 ## CLI reference
 
-Synopsis:
-
 ```text
-runledger <command> [args]
-```
+runledger 1.00 (1.0.0)
 
-| Flag / argument | Meaning |
-| --- | --- |
-| `-h, --help` | Print detailed usage and exit 0. |
-| `-v, --version` | Print 1.0.0 and exit 0. |
-| `record <cmd> <code>` | Append one receipt. <cmd> is a string; <code> is the numeric exit code. |
-| `list` | Print all receipts as a JSON array. |
+Usage:
+  runledger record <cmd> <code> [options]
+  runledger list [options]
+  runledger summary [options]
+
+Append-only JSONL command ledger. Each receipt is {ts, cmd, code}.
+Default store: ./.runledger.jsonl
+
+Subcommands:
+  record             Append one receipt. <cmd> is a string; <code> is an integer
+  list               Print receipts, optionally filtered
+  summary            Counts, first/last timestamps, and per-command totals
+
+Options:
+  -h, --help         Show this help and exit 0
+  -V, -v, --version  Print 1.0.0 and exit 0
+  --json             JSON output (pretty for list/summary)
+  --file <path>      Ledger file (relative to cwd unless absolute)
+  --since <date>     Keep receipts at or after this ISO/date string
+  --until <date>     Keep receipts at or before this ISO/date string
+  --cmd <substr>     Keep receipts whose cmd contains this substring
+
+Exit codes:
+  0  success
+  1  usage error, invalid JSONL, or invalid date/code
+
+Examples:
+  runledger record "npm test" 0
+  runledger record "npm lint" 1 --file ./tmp/runs.jsonl
+  runledger list --since 2026-08-01 --cmd test
+  runledger summary --json
+```
 
 Print the same text locally:
 
 ```bash
 runledger --help
+runledger -h
 runledger --version
+runledger -V
 ```
 
 Expected version output:
@@ -87,33 +112,36 @@ Expected version output:
 
 ## Configuration
 
-Store file is always `.runledger.jsonl` in the current working directory. There is no global config. Create the file by recording; missing file means list returns [].
+Default store is `.runledger.jsonl` in the current working directory. Override with `--file`.
 
 ## Exit codes
 
 | Code | Meaning |
 | --- | --- |
-| `0` | record or list succeeded. |
-| `1` | Unknown subcommand or missing record arguments. |
+| `0` | record, list, or summary succeeded. |
+| `1` | Unknown subcommand, invalid JSONL, or bad date/code. |
 
 ## Examples
 
 ### Success path
 
-Record a passing command, then list.
+Record a passing command, then list and summarize.
 
 ```bash
 runledger record "npm test" 0
 runledger list
+runledger summary
 ```
 
-```json
-[{"ts":"2026-08-23T16:00:00.000Z","cmd":"npm test","code":0}]
+```text
+2026-08-23T16:00:00.000Z  exit 0  npm test
+receipts: 1
+ok:       1
 ```
 
 ### Failure path
 
-Missing arguments fail fast.
+Missing record arguments fail fast.
 
 ```bash
 runledger record
