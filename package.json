@@ -1,0 +1,16 @@
+{
+  "name": "runledger",
+  "version": "0.1.0",
+  "description": "Append and list JSONL command receipts.",
+  "bin": {
+    "runledger": "./src/cli.js"
+  },
+  "main": "./src/index.js",
+  "scripts": {
+    "test": "node --test"
+  },
+  "license": "MIT",
+  "engines": {
+    "node": ">=18"
+  }
+}
