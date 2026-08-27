@@ -1,9 +1,9 @@
 {
   "$schema": "https://jsr.io/schema/config-file.v1.json",
   "name": "@theworker02/runledger",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "exports": "./jsr/mod.js",
   "publish": {
-    "include": ["jsr/**/*.js", "README.md", "LICENSE"]
+    "include": ["jsr/**/*", "README.md", "LICENSE"]
   }
 }
