@@ -3,134 +3,31 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>runledger  · 1.00</title>
+  <title>runledger · 1.2.0</title>
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
   <nav class="nav sans">
     <a class="brand-lockup" href="index.html"><img src="logo.svg" alt=""> runledger</a>
-    <div class="links">
-      <a href="index.html#overview">Overview</a>
-      <a href="index.html#install">Install</a>
-      <a href="usage.html">Usage</a>
-      <a href="index.html#examples">Examples</a>
-      <a href="https://github.com/theworker02/runledger">GitHub</a>
-      <a href="https://www.npmjs.com/package/%40magnexis/runledger">npm</a>
-      <a href="https://github.com/theworker02/runledger/releases/tag/v1.0.0">1.00</a>
-    </div>
+    <div class="links"><a href="#overview">Overview</a><a href="#api">API</a><a href="#examples">Examples</a><a href="https://jsr.io/@theworker02/runledger">JSR</a><a href="https://github.com/theworker02/runledger">GitHub</a></div>
   </nav>
-  
   <header class="hero">
     <img src="logo.svg" alt="runledger mark">
-    <div>
-      <p class="kicker sans">theworker02 · version 1.00</p>
-      <h1>runledger</h1>
-      <p class="lede">Append {ts,cmd,code} receipts to .runledger.jsonl and list them later.</p>
-      <div class="badges sans">
-        <span class="badge">1.00 / 1.0.0</span>
-        <span class="badge">branch main</span>
-        <span class="badge">MIT</span>
-        <span class="badge">Node.js >= 18</span>
-      </div>
-    </div>
+    <div><p class="kicker sans">@theworker02/runledger · JSR · 1.2.0</p><h1>runledger</h1><p class="lede">Append-only JSONL command receipts with validation, filtering, summaries, and a structured API.</p><div class="badges sans"><span class="badge">1.2.0</span><span class="badge">JSR</span><span class="badge">MIT</span><span class="badge">Node.js ≥ 18</span></div></div>
   </header>
   <div class="wrap">
-    <section id="overview">
-      <h2>Overview</h2>
-      <p>Shell history is noisy and easy to lose. runledger writes an append-only JSONL log next to the project so you can prove what ran and whether it succeeded.</p>
-      <p>Anyone wrapping scripts, workshop graders, or local CI helpers who need a durable, grep-friendly command log.</p>
-    </section>
-    <section id="install">
-      <h2>Install</h2>
-      <p>Install globally from npm, or run with Node from a clone. There are no extra dependencies.</p>
-      <p>Package: <a href="https://www.npmjs.com/package/%40magnexis/runledger"><code>@magnexis/runledger</code></a></p>
-      <pre><code>npm i -g @magnexis/runledger
-runledger --help</code></pre>
-      <pre><code>runledger 1.00 (1.0.0)
+    <section id="overview"><h2>Overview</h2><p>RunLedger preserves a durable command history alongside a project. Version 1.2.0 adds receipt shape validation, in-memory filtering, package metadata, stronger declarations, and richer generated JSR documentation.</p></section>
+    <section id="api"><h2>Structured API</h2><p>Canonical package: <a href="https://jsr.io/@theworker02/runledger"><code>@theworker02/runledger</code></a></p><pre><code>import { record, summary, isReceipt, PACKAGE } from "@theworker02/runledger";
 
-Usage:
-  runledger record &lt;cmd&gt; &lt;code&gt; [options]
-  runledger list [options]
-  runledger summary [options]
-
-Append-only JSONL command ledger. Each receipt is {ts, cmd, code}.
-Default store: ./.runledger.jsonl
-
-Subcommands:
-  record             Append one receipt. &lt;cmd&gt; is a string; &lt;code&gt; is an integer
-  list               Print receipts, optionally filtered
-  summary            Counts, first/last timestamps, and per-command totals
-
-Options:
-  -h, --help         Show this help and exit 0
-  -V, -v, --version  Print 1.0.0 and exit 0
-  --json             JSON output (pretty for list/summary)
-  --file &lt;path&gt;      Ledger file (relative to cwd unless absolute)
-  --since &lt;date&gt;     Keep receipts at or after this ISO/date string
-  --until &lt;date&gt;     Keep receipts at or before this ISO/date string
-  --cmd &lt;substr&gt;     Keep receipts whose cmd contains this substring
-
-Exit codes:
-  0  success
-  1  usage error, invalid JSONL, or invalid date/code
-
-Examples:
-  runledger record "npm test" 0
-  runledger record "npm lint" 1 --file ./tmp/runs.jsonl
-  runledger list --since 2026-08-01 --cmd test
-  runledger summary --json</code></pre>
-    </section>
-    <section id="usage">
-      <h2>Usage</h2>
-      <p>Synopsis: <code>runledger &lt;command&gt; [args]</code></p>
-      <p>See the <a href="usage.html">full CLI reference</a> for every flag, exit code, and example.</p>
-      <pre><code>runledger 1.00 (1.0.0)
-
-Usage:
-  runledger record &lt;cmd&gt; &lt;code&gt;
-  runledger list
-  runledger --help
-  runledger --version
-
-Append JSONL receipts {ts,cmd,code} to ./.runledger.jsonl.
-
-Subcommands:
-  record   Append one receipt. &lt;cmd&gt; is a string; &lt;code&gt; is an integer exit code.
-  list     Print every receipt as pretty JSON.
-
-Options:
-  -h, --help       Show this help
-  -v, --version    Print 1.0.0
-
-Examples:
-  runledger record "npm test" 0
-  runledger record "npm lint" 1
-  runledger list</code></pre>
-    </section>
-    <section id="examples">
-      <h2>Examples</h2>
-      <div class="grid-2">
-        <div>
-          <h3 class="ok">Success</h3>
-          <p>Record a passing command, then list and summarize.</p><pre><code>runledger record "npm test" 0
-runledger list
-runledger summary</code></pre><pre><code>2026-08-23T16:00:00.000Z  exit 0  npm test
-receipts: 1
-ok:       1</code></pre>
-        </div>
-        <div>
-          <h3 class="fail">Failure</h3>
-          <p>Missing record arguments fail fast.</p><pre><code>runledger record</code></pre><pre><code>usage: runledger record &lt;cmd&gt; &lt;code&gt;</code></pre><p>Exit code is 1.</p>
-        </div>
-      </div>
-    </section>
+record("node --test", 0);
+console.log(summary());
+console.log(isReceipt({ ts: new Date().toISOString(), cmd: "build", code: 0 }));
+console.log(PACKAGE.version);</code></pre></section>
+    <section id="examples"><h2>CLI from source</h2><pre><code>git clone https://github.com/theworker02/runledger.git
+cd runledger
+node src/cli.js record "node --test" 0
+node src/cli.js summary</code></pre></section>
   </div>
-  <footer class="sans">
-    MIT © 2026 theworker02 · version <strong>1.00</strong> (<code>1.0.0</code>) ·
-    navy <code>#0B1F33</code> · gold <code>#C9A227</code> ·
-    <a href="https://www.npmjs.com/package/%40magnexis/runledger">npm</a> ·
-    <a href="https://github.com/theworker02/runledger">GitHub</a> ·
-    <a href="https://thanks.dev/u/gh/theworker02">thanks.dev</a>
-  </footer>
+  <footer class="sans">MIT © 2026 theworker02 · <strong>1.2.0</strong> · <a href="https://jsr.io/@theworker02/runledger">JSR</a> · <a href="https://github.com/theworker02/runledger">GitHub</a></footer>
 </body>
 </html>
