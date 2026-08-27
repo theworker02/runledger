@@ -1,3 +1,9 @@
+/**
+ * Record, filter, inspect, and summarize append-only JSONL command receipts.
+ *
+ * @module
+ */
+
 /** One command execution receipt stored by RunLedger. */
 export interface Receipt {
   /** ISO-8601 timestamp for the command execution. */
@@ -46,19 +52,40 @@ export interface LedgerSummary {
   commands: CommandSummary[];
 }
 
+/** Read-only package metadata exposed by RunLedger. */
+export interface PackageMetadata {
+  /** JSR package name. */
+  readonly name: "@theworker02/runledger";
+  /** Current package version. */
+  readonly version: "1.2.0";
+  /** Primary runtime family. */
+  readonly runtime: "node";
+  /** Canonical package registry. */
+  readonly registry: "jsr";
+}
+
+/** Package identity and release metadata. */
+export const PACKAGE: PackageMetadata;
+
 /** Default ledger filename. */
-export const STORE: string;
+export const STORE: ".runledger.jsonl";
 
 /** Resolve the ledger file path for a working directory. */
 export function storePath(cwd?: string, file?: string): string;
 
+/** Return whether an unknown value has the shape of a valid RunLedger receipt. */
+export function isReceipt(value: unknown): value is Receipt;
+
+/** Filter an in-memory receipt collection without reading a ledger file. */
+export function filterReceipts(rows: Receipt[], filters?: LedgerFilters): Receipt[];
+
 /** Append a command execution receipt to the ledger. */
 export function record(cmd: string, code: number | string, cwd?: string, now?: Date, file?: string): Receipt;
 
-/** Read all receipts from the ledger file. */
+/** Read and validate all receipts from the ledger file. */
 export function readLedger(cwd?: string, file?: string): Receipt[];
 
-/** List receipts, optionally filtered by date or command text. */
+/** List receipts from disk, optionally filtered by date or command text. */
 export function list(cwd?: string, filters?: LedgerFilters, file?: string): Receipt[];
 
 /** Summarize matching command receipts. */
