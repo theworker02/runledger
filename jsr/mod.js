@@ -3,6 +3,7 @@
 import fs from "node:fs";
 import path from "node:path";
 
+const PACKAGE = Object.freeze({ name: "@theworker02/runledger", version: "1.2.0", runtime: "node", registry: "jsr" });
 const STORE = ".runledger.jsonl";
 
 function storePath(cwd = process.cwd(), file) {
@@ -14,6 +15,37 @@ function parseCode(code) {
   const n = Number(code);
   if (!Number.isInteger(n)) throw new Error(`exit code must be an integer, got ${code}`);
   return n;
+}
+
+function isReceipt(value) {
+  return Boolean(
+    value &&
+    typeof value === "object" &&
+    typeof value.ts === "string" &&
+    !Number.isNaN(Date.parse(value.ts)) &&
+    typeof value.cmd === "string" &&
+    Number.isInteger(value.code),
+  );
+}
+
+function filterReceipts(rows, filters = {}) {
+  const { since, until, cmd } = filters;
+  let result = [...rows];
+  if (since) {
+    const t = Date.parse(since);
+    if (Number.isNaN(t)) throw new Error(`invalid --since date: ${since}`);
+    result = result.filter((row) => Date.parse(row.ts) >= t);
+  }
+  if (until) {
+    const t = Date.parse(until);
+    if (Number.isNaN(t)) throw new Error(`invalid --until date: ${until}`);
+    result = result.filter((row) => Date.parse(row.ts) <= t);
+  }
+  if (cmd) {
+    const needle = String(cmd).toLowerCase();
+    result = result.filter((row) => String(row.cmd).toLowerCase().includes(needle));
+  }
+  return result;
 }
 
 function record(cmd, code, cwd = process.cwd(), now = new Date(), file) {
@@ -33,32 +65,18 @@ function readLedger(cwd = process.cwd(), file) {
   text.split(/\n/).forEach((line, index) => {
     if (!line.trim()) return;
     try {
-      rows.push(JSON.parse(line));
-    } catch {
-      throw new Error(`invalid JSONL at ${dest}:${index + 1}`);
+      const row = JSON.parse(line);
+      if (!isReceipt(row)) throw new Error("invalid receipt shape");
+      rows.push(row);
+    } catch (error) {
+      throw new Error(`invalid JSONL at ${dest}:${index + 1} (${error.message})`);
     }
   });
   return rows;
 }
 
 function list(cwd = process.cwd(), filters = {}, file) {
-  const { since, until, cmd } = filters;
-  let rows = readLedger(cwd, file);
-  if (since) {
-    const t = Date.parse(since);
-    if (Number.isNaN(t)) throw new Error(`invalid --since date: ${since}`);
-    rows = rows.filter((row) => Date.parse(row.ts) >= t);
-  }
-  if (until) {
-    const t = Date.parse(until);
-    if (Number.isNaN(t)) throw new Error(`invalid --until date: ${until}`);
-    rows = rows.filter((row) => Date.parse(row.ts) <= t);
-  }
-  if (cmd) {
-    const needle = String(cmd).toLowerCase();
-    rows = rows.filter((row) => String(row.cmd).toLowerCase().includes(needle));
-  }
-  return rows;
+  return filterReceipts(readLedger(cwd, file), filters);
 }
 
 function summary(cwd = process.cwd(), filters = {}, file) {
@@ -105,13 +123,4 @@ function formatHumanSummary(stats) {
   return `${lines.join("\n")}\n`;
 }
 
-export {
-  STORE,
-  storePath,
-  record,
-  list,
-  summary,
-  readLedger,
-  formatHumanList,
-  formatHumanSummary,
-};
+export { PACKAGE, STORE, storePath, isReceipt, filterReceipts, record, list, summary, readLedger, formatHumanList, formatHumanSummary };
