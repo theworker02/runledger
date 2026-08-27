@@ -1,40 +1,16 @@
 {
-  "name": "@magnexis/runledger",
-  "version": "1.0.0",
-  "description": "Append {ts,cmd,code} receipts to .runledger.jsonl and list them later.",
-  "bin": {
-    "runledger": "src/cli.js"
-  },
+  "name": "@theworker02/runledger",
+  "version": "1.2.0",
+  "private": true,
+  "description": "Record, validate, filter, and summarize append-only JSONL command receipts.",
+  "bin": { "runledger": "src/cli.js" },
   "main": "./src/index.js",
-  "scripts": {
-    "test": "node --test"
-  },
+  "scripts": { "test": "node --test" },
   "license": "MIT",
-  "engines": {
-    "node": ">=18"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/theworker02/runledger.git"
-  },
+  "engines": { "node": ">=18" },
+  "repository": { "type": "git", "url": "https://github.com/theworker02/runledger.git" },
   "homepage": "https://theworker02.github.io/runledger/",
-  "bugs": {
-    "url": "https://github.com/theworker02/runledger/issues"
-  },
-  "files": [
-    "src",
-    "docs",
-    "LICENSE",
-    "README.md"
-  ],
-  "keywords": [
-    "jsonl",
-    "ledger",
-    "receipt",
-    "cli",
-    "audit"
-  ],
-  "publishConfig": {
-    "access": "public"
-  }
+  "bugs": { "url": "https://github.com/theworker02/runledger/issues" },
+  "files": ["src", "docs", "LICENSE", "README.md"],
+  "keywords": ["jsonl", "ledger", "receipt", "audit", "cli", "jsr"]
 }
