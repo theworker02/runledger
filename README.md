@@ -17,7 +17,7 @@ This project is **proprietary**. Production use, redistribution, and commercial 
 ![license MIT](https://img.shields.io/badge/license-MIT-0B1F33)
 ![node >=18](https://img.shields.io/badge/node-%3E%3D18-C9A227?labelColor=0B1F33)
 
-**Package:** [`@theworker02/runledger`](https://jsr.io/@theworker02/runledger) Â· **Docs:** [GitHub Pages](https://theworker02.github.io/runledger/) Â· **Source:** [`theworker02/runledger`](https://github.com/theworker02/runledger)
+**Package:** [`@theworker02/runledger`](https://jsr.io/@theworker02/runledger) Ã‚Â· **Docs:** [GitHub Pages](https://theworker02.github.io/runledger/) Ã‚Â· **Source:** [`theworker02/runledger`](https://github.com/theworker02/runledger)
 
 ## Highlights
 
@@ -54,23 +54,23 @@ console.log(filterReceipts([], { cmd: "test" }), PACKAGE.version);
 
 ### Ledger operations
 
-- `record(cmd, code, cwd, now, file)` â€” append one command receipt.
-- `readLedger(cwd, file)` â€” read and validate JSONL receipts.
-- `list(cwd, filters, file)` â€” load and filter receipts.
-- `summary(cwd, filters, file)` â€” aggregate command outcomes.
+- `record(cmd, code, cwd, now, file)` Ã¢â‚¬â€ append one command receipt.
+- `readLedger(cwd, file)` Ã¢â‚¬â€ read and validate JSONL receipts.
+- `list(cwd, filters, file)` Ã¢â‚¬â€ load and filter receipts.
+- `summary(cwd, filters, file)` Ã¢â‚¬â€ aggregate command outcomes.
 
 ### Validation and filtering
 
-- `isReceipt(value)` â€” type guard for receipt-shaped data.
-- `filterReceipts(rows, filters)` â€” filter an in-memory receipt set.
-- `storePath(cwd, file)` â€” resolve the active ledger path.
-- `STORE` â€” default ledger filename.
-- `PACKAGE` â€” package identity and release metadata.
+- `isReceipt(value)` Ã¢â‚¬â€ type guard for receipt-shaped data.
+- `filterReceipts(rows, filters)` Ã¢â‚¬â€ filter an in-memory receipt set.
+- `storePath(cwd, file)` Ã¢â‚¬â€ resolve the active ledger path.
+- `STORE` Ã¢â‚¬â€ default ledger filename.
+- `PACKAGE` Ã¢â‚¬â€ package identity and release metadata.
 
 ### Formatting
 
-- `formatHumanList(rows)` â€” terminal-friendly receipt output.
-- `formatHumanSummary(stats)` â€” terminal-friendly summary output.
+- `formatHumanList(rows)` Ã¢â‚¬â€ terminal-friendly receipt output.
+- `formatHumanSummary(stats)` Ã¢â‚¬â€ terminal-friendly summary output.
 
 ### Types
 
@@ -110,4 +110,8 @@ The canonical package is published to JSR through GitHub Actions using OIDC trus
 
 ## License
 
-[MIT](LICENSE) Â© 2026 theworker02
+[MIT](LICENSE) Ã‚Â© 2026 theworker02
+
+## Status
+
+runledger is actively packaged for commercial licensing and acquisition diligence. See [ACQUISITION.md](./ACQUISITION.md) and [docs/acquisition/](./docs/acquisition/).
